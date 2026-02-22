@@ -132,7 +132,7 @@ export default function TrackCategoryPage() {
         setCurrentSubFlowIndex((i) => i + 1);
         setSubFlowEntries([]);
       } else {
-        router.push("/");
+        setTimeout(() => router.push("/"), 0);
       }
       return;
     }

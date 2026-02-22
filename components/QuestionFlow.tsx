@@ -33,6 +33,7 @@ export function QuestionFlow({
 }: QuestionFlowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, unknown>>(initialAnswers);
+  const [flowComplete, setFlowComplete] = useState(false);
   const [answered, setAnswered] = useState<Set<number>>(() => {
     const initial = new Set<number>();
     questions.forEach((q, i) => {
@@ -67,6 +68,14 @@ export function QuestionFlow({
   useEffect(() => {
     return () => clearAutoAdvance();
   }, [clearAutoAdvance]);
+
+  // Fire onComplete after render (not during) to avoid setState-during-render errors
+  useEffect(() => {
+    if (flowComplete) {
+      onComplete(answers);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flowComplete]);
 
   const goToNext = useCallback(() => {
     clearAutoAdvance();
@@ -105,7 +114,7 @@ export function QuestionFlow({
   );
 
   if (!currentQuestion) {
-    onComplete(answers);
+    if (!flowComplete) setFlowComplete(true);
     return null;
   }
 
