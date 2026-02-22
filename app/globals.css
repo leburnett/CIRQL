@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --colour-mood: #2D2D2D;
+  --colour-diet: #4A7C59;
+  --colour-exercise: #C2555A;
+  --colour-sleep: #5B6AAF;
+  --colour-energy: #D4943A;
+  --colour-cycle: #9B5F8A;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom slider thumb styling */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Prevent iOS zoom on input focus */
+@media screen and (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}

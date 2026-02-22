@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  moodEntries     MoodEntry[]
+  dietEntries     DietEntry[]
+  teaEntries      TeaEntry[]
+  alcoholEntries  AlcoholEntry[]
+  exerciseEntries ExerciseEntry[]
+  sleepEntries    SleepEntry[]
+  energyEntries   EnergyEntry[]
+  cycleEntries    CycleEntry[]
+  customOptions   CustomOption[]
+}
+
+model MoodEntry {
+  id             String   @id @default(uuid())
+  userId         String
+  date           DateTime @db.Date
+  positivity     Int?
+  melancholy     Int?
+  tiredness      Int?
+  focus          Int?
+  socialWilling  Int?
+  creativity     Int?
+  anxiety        Int?
+  calm           Int?
+  motivation     Int?
+  gratitude      Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model DietEntry {
+  id          String   @id @default(uuid())
+  userId      String
+  date        DateTime @db.Date
+  breakfast   Json?
+  lunch       String?
+  dinner      String?
+  snacks      String?
+  coffeeCount Int      @default(0)
+  waterCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+model TeaEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @db.Date
+  type      String
+  cups      Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date, type])
+}
+
+model AlcoholEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @db.Date
+  type      String
+  units     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date, type])
+}
+
+model ExerciseEntry {
+  id           String   @id @default(uuid())
+  userId       String
+  date         DateTime @db.Date
+  type         String
+  durationMins Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model SleepEntry {
+  id           String   @id @default(uuid())
+  userId       String
+  date         DateTime @db.Date
+  hours        Float?
+  restless     Boolean  @default(false)
+  sleepTalking Boolean  @default(false)
+  hot          Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+model EnergyEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @db.Date
+  level     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+model CycleEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime @db.Date
+  onPeriod  Boolean  @default(false)
+  flow      String?
+  cramps    Int?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+model CustomOption {
+  id        String   @id @default(uuid())
+  userId    String
+  category  String
+  value     String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category, value])
+}
