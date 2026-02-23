@@ -5,7 +5,7 @@ import { categoryList } from "@/lib/questions";
 
 export function CategoryDotList() {
   return (
-    <div className="flex flex-col items-center gap-8 py-12 px-4 md:grid md:grid-cols-2 md:gap-12 md:max-w-3xl md:mx-auto md:px-10 lg:grid-cols-3 lg:max-w-5xl">
+    <div className="flex flex-col items-center gap-8 py-12 px-4 md:grid md:grid-cols-2 md:gap-6 md:max-w-none md:mx-auto md:px-[8vw] lg:grid-cols-3 lg:gap-8 lg:px-[10vw]">
       {categoryList.map((category) => (
         <div key={category.id} className="flex justify-center">
           <CategoryDot

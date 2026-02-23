@@ -14,7 +14,7 @@ export function CategoryDot({ id, label, colour }: CategoryDotProps) {
     <Link href={`/track/${id}`}>
       <motion.div
         className="w-[75vw] max-w-[320px] aspect-square rounded-full
-                   md:w-full flex items-center justify-center cursor-pointer select-none"
+                   md:w-[25vw] md:max-w-none lg:w-[22vw] flex items-center justify-center cursor-pointer select-none"
         style={{ backgroundColor: colour }}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
